@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Signika+Negative&display=swap');
+*{box-sizing: border-box;}
+html, body
+{
+    height: 100vh;
+    width: 100vw;
+}
+body
+{
+    background: radial-gradient(circle at 0% 0%, #373b52, #252736 51%, #1d1e26);
+    margin: 0;
+    padding: 0;
+}
+#app
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+a
+{
+    text-decoration: none;
+    color: inherit;
+}

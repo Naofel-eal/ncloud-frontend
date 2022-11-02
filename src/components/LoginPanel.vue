@@ -41,7 +41,7 @@ export default {
             if(response.status === 201)
             {
                 sessionStorage.setItem('isLogged', true);
-                sessionStorage.setItem('tokken', response.data.access_token);
+                sessionStorage.setItem('token', response.data.access_token);
                 this.$router.push('/home');
             }
         })
@@ -54,7 +54,7 @@ export default {
             else
                 this.showError.msg = "Erreur inconnue : " + error.status;
             sessionStorage.setItem('isLogged', false);
-            sessionStorage.setItem('tokken', null)
+            sessionStorage.setItem('token', null)
         });
     },
   },

@@ -1,16 +1,18 @@
 <template>
   <div c-if="User" class="homeContainer">
     <my-header></my-header>
+    <my-user-directory></my-user-directory>
   </div>
 </template>
 
 <script>
-import MyHeader from '@/components/MyHeader.vue'
+import MyHeader from '@/components/MyHeader.vue';
+import MyUserDirectory from '@/components/MyUserDirectory.vue';
 
 export default {
   name: 'HomePage',
   components: {
-    MyHeader
+    MyHeader, MyUserDirectory,
   },
 }
 </script>

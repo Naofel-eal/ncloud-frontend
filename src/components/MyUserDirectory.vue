@@ -1,12 +1,19 @@
 <template>
   <div class="myUsers">
     <action-bar></action-bar>
+    <div class="strctureTree">
+        <div class="treeItem" @click="this.backToRootFolder()"> / </div>
+        <div class="treeItem" 
+        v-for="item in treeStructure" :key="item"
+        
+        ><p> {{item.folder.name}} </p></div>
+    </div>
     <div class="filesTree">
         <my-folder 
         v-for="folder in folders" :key="folder" 
         :name="folder.name" :id="folder.id"
         :selected="selectedItemID === 'fo_' + folder.id"
-        @click="selectedItemID = folder.id === selectedItemID ? 0 : 'fo_' + folder.id; doubleClickFolder($event, folder.id)"
+        @click="selectedItemID = folder.id === selectedItemID ? 0 : 'fo_' + folder.id; doubleClickFolder(folder.id, folder.name)"
         ></my-folder>
         <my-file
          v-for="file in files" :key="file" 
@@ -39,7 +46,9 @@ export default {
                 delay : 500,
                 clicks : 0,
                 timer : null,
-            }
+            },
+            treeStructure : [],
+            rootFolderID : 0,
         }
     },
     methods : {
@@ -65,7 +74,7 @@ export default {
                 console.log("Error folders recovery : " + error.response.status);
             });
         },
-        doubleClickFolder: function(event, rootID){
+        doubleClickFolder: function(folderID, folderName){
           this.clickData.clicks++ 
           if(this.clickData.clicks === 1) {
             var self = this.clickData
@@ -75,18 +84,24 @@ export default {
           } else{
              clearTimeout(this.clickData.timer);  
              this.clickData.clicks = 0;
-             this.refresh(rootID);
-          }        	
-        }      
+             this.refresh(folderID);
+             this.treeStructure.push({folder : {id : folderID, name : folderName}})
+            }        	
+        },
+        backToRootFolder() {
+            this.treeStructure = [];
+            this.refresh(this.rootFolderID);
+        }
     },
     mounted() {
         Axios.get(API.URL + API.USERS_ROOTFOLDER)
-            .then(response => {
-                this.refresh(response.data);
-            })
-            .catch( error => {
-                console.log("Impossible de trouver le dossier root : " + error.response.status);
-            });
+        .then(response => {
+            this.rootFolderID = response.data
+            this.refresh(response.data);
+        })
+        .catch( error => {
+            console.log("Impossible de trouver le dossier root : " + error.response.status);
+        });
     }
 }   
 </script>
@@ -102,5 +117,27 @@ h3 {
 }
 .filesTree {
     display: flex;
+}
+.strctureTree {
+    width: 100vw;
+    height: 6vh;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    background-color: #1d1e26;
+    padding: 0 2rem;
+}
+.treeItem {
+    background: rgba(116, 58, 213, 0.5);
+    border-radius: 0.3rem;
+    color: white;
+    width: fit-content;
+    padding: 1rem;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    font-family: 'Lato', Verdana, Geneva, Tahoma, sans-serif;
+    margin-right: 1rem;
+    cursor: pointer;
 }
 </style>

@@ -25,7 +25,6 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-bottom: 1rem;
     border-bottom: 10px solid;
     border-image-slice: 1;
     border-width: 5px;

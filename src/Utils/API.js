@@ -22,6 +22,7 @@ class API{
     static USERS = 'users';
     static USERS_FILES = 'users/files'
     static USERS_FOLDERS = 'users/folders'
+    static USERS_ROOTFOLDER = 'users/rootfolder'
 
 }
 export default API;

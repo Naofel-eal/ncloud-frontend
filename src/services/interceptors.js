@@ -15,7 +15,6 @@ Axios.interceptors.response.use(response => {
 },error => {
     if(error.response.status === 401 && router.currentRoute.value.fullPath !='/')
     {
-        console.log("Reponse interceptee");
         sessionStorage.removeItem('token');
         sessionStorage.setItem('isLogged', false);
         router.push('/');

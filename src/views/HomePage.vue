@@ -8,6 +8,7 @@
 <script>
 import MyHeader from '@/components/MyHeader.vue';
 import MyUserDirectory from '@/components/MyUserDirectory.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'HomePage',

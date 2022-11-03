@@ -1,12 +1,18 @@
 import Vuex from 'vuex'
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
     state: {
-        currentFolder : "",
+        parentFolderId : "ressources",
+    },
+    getters : {
+        getCurrentFolder(state) {
+            return state.parentFolderId;
+        }
     },
     mutations : {
-        increment (folder) {
-            this.currentFolder = folder;
+        setCurrentFolder(state, folderId) {
+            state.parentFolderId = folderId;
         }
-    }
-})
+    },
+    actions: {},
+});

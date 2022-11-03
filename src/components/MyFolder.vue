@@ -1,45 +1,31 @@
 <template>
-  <div class="myFile">
-    <div class="file" :class="{selected : selected}">
-        <div class="fileBlock">
-            <p class="fileType">.{{type}}</p>
-        </div>
-        <div class="fileName">{{name}}</div>
+    <div class="myFolder" :class="{selected : selected}" >
+        <div class="folderLogo"></div>
+        <p class="folderName">{{name}} - {{id}}</p>
     </div>
-  </div>
 </template>
 
 <script>
 export default {
-    name: 'MyFile',
-    props: {
-        name: {
+    name: 'MyFolder',
+    props : {
+        name : {
             type: String,
             required: true,
         },
-        type : {
-            type : String,
+        id : {
             required: true,
         },
         selected : {
             type : Boolean,
             required: true,
         }
-    }
+    },
 }
 </script>
 
 <style>
-.myFile {
-    width : fit-content;
-    height: fit-content;
-    margin-left: 2rem;
-    margin-bottom: 2rem;
-}
-.selected {
-    background-color: rgba(255,255,255,0.3);
-}
-.file {
+.myFolder {
     height: 200px;
     width: 150px;
     padding: 1rem;
@@ -48,11 +34,16 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-left: 2rem;
+    margin-bottom: 2rem;
 }
-.fileBlock {
+.selected {
+    background-color: rgba(255,255,255,0.3);
+}
+.folderLogo {
     width: 100%;
     height: 100%;
-    background-image: url('@/assets/img/file.png');
+    background-image: url('@/assets/img/folder.png');
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -60,7 +51,7 @@ export default {
     justify-content: center;
     align-items: center;
 }
-.fileName{
+.folderName{
     height: 2rem;
     max-width: 95%;
     margin-top: 1rem;
@@ -72,6 +63,12 @@ export default {
            line-clamp: 2; 
    -webkit-box-orient: vertical;
    font-size: large;
+   -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
-
 </style>

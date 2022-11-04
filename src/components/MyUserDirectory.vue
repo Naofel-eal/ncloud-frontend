@@ -88,30 +88,30 @@ export default {
           } else{
              clearTimeout(this.clickData.timer);  
              this.clickData.clicks = 0;
-             this.refresh(folderID);
              this.treeStructure.push({folder : {id : folderID, name : folderName}})
-            }        	
-        },
-        backToFolder(folderID) {
-            const folderIndex = this.getFolderIndex(folderID);
-            let index = 0;
-            for(const item of this.treeStructure) {
-                if(index >= folderIndex)
-                    this.treeStructure.splice(index+1, 1);
-                index++;
+             this.refresh(folderID);
             }
+        },
+        async backToFolder(folderID) {
+            const folderIndex = this.getFolderIndex(folderID);
+
+            for(let i = this.treeStructure.length-1 ; i > folderIndex ; i--) {
+                this.treeStructure.splice(i, 1);
+            }
+            //console.log(this.treeStructure);
             this.refresh(folderID)
         },
         backToPrecFolder() {
-            this.treeStructure.splice(this.treeStructure.length-1, 1);
-            this.refresh(this.treeStructure[this.treeStructure.length-1].folder.id);
+            if(this.treeStructure.length != 1) 
+            {
+                this.treeStructure.splice(this.treeStructure.length-1, 1);
+                this.refresh(this.treeStructure[this.treeStructure.length-1].folder.id);
+            }
         },
         getFolderIndex(folderID) {
-            let index = 0;
-            for(const item of this.treeStructure) {
-                if(item.folder.id == folderID)
-                    return index;
-                index++;
+            for(let i = 0; i < this.treeStructure.length ; i++) {
+                if(this.treeStructure[i].folder.id == folderID)
+                    return i;
             }
         },
     },

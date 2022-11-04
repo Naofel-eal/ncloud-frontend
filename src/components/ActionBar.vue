@@ -8,7 +8,7 @@
 
     <div class="actionBtnDiv">
         <label class="actionBtn"
-        @click="this.$parent.refresh(-1);"
+        @click="this.refreshParent()"
         >REFRESH</label>
     </div>
 
@@ -17,7 +17,7 @@
         <label for="uploadBtn" class="actionBtn">IMPORT FILE</label>
     </div>
     <div class="actionBtnDiv">
-        <label class="actionBtn" @click="this.submitFiles()">UPLOAD</label>
+        <label class="actionBtn" @click="this.submitFiles();">UPLOAD</label>
     </div>
 
     <div class="actionBtnDiv">
@@ -38,19 +38,24 @@ export default {
         }
     },
     methods : {
-        submitFiles() {
+        refreshParent() {
+            this.$parent.refresh(-1);
+        },
+        async submitFiles() {
             if(this.$refs.file.files.length != 0) {
+                const currentFolderID = this.$parent.getCurrentFolderID();
                 let formData = new FormData();
                 for( var i = 0; i < this.$refs.file.files.length; i++ ) {
                     formData.append('files',this.$refs.file.files[i]);
                 }
-
-            Axios.post(API.URL + API.FILE_PUSH, formData, {
+                formData.append('currentFolderID', currentFolderID)
+            
+            await Axios.post(API.URL + API.FILE_PUSH,formData, {
                     headers : {
                         'Content-Type': 'multipart/form-data'
                     },
                 }).then(function () {
-                    console.log("files uploaded");
+                    this.refreshParent();
                 }).catch(error => {
                     console.log("ERROR : " + error);
                 });

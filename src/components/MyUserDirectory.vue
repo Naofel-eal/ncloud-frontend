@@ -1,6 +1,6 @@
 <template>
   <div class="myUsers">
-    <action-bar></action-bar>
+    <action-bar @refresh="refresh(-1)"></action-bar>
     <div class="strctureTree">
         <structure-tree-item 
         v-for="item in treeStructure" :key="item"
@@ -55,7 +55,9 @@ export default {
     },
     methods : {
         refresh(parentFolderID) {
-            if(parentFolderID == -1)
+            console.log("refresh " + parentFolderID)
+            console.log(this.treeStructure)
+            if(parentFolderID === -1)
                 parentFolderID = this.treeStructure[this.treeStructure.length-1].folder.id;
             this.getFolders(parentFolderID);
             this.getFiles(parentFolderID)
@@ -114,6 +116,9 @@ export default {
                     return i;
             }
         },
+        getCurrentFolderID() {
+            return this.treeStructure[this.treeStructure.length-1].folder.id;
+        }
     },
     mounted() {
         Axios.get(API.URL + API.USERS_ROOTFOLDER)

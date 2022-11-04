@@ -55,6 +55,8 @@ export default {
     },
     methods : {
         refresh(parentFolderID) {
+            if(parentFolderID == -1)
+                parentFolderID = this.treeStructure[this.treeStructure.length-1].folder.id;
             this.getFolders(parentFolderID);
             this.getFiles(parentFolderID)
         },
@@ -91,16 +93,26 @@ export default {
             }        	
         },
         backToFolder(folderID) {
-            let find = false;
+            const folderIndex = this.getFolderIndex(folderID);
             let index = 0;
             for(const item of this.treeStructure) {
-                if(find)
-                    this.treeStructure.splice(index, 1);
-                if(item.folder.id == folderID)
-                    find = true;
+                if(index >= folderIndex)
+                    this.treeStructure.splice(index+1, 1);
                 index++;
             }
             this.refresh(folderID)
+        },
+        backToPrecFolder() {
+            this.treeStructure.splice(this.treeStructure.length-1, 1);
+            this.refresh(this.treeStructure[this.treeStructure.length-1].folder.id);
+        },
+        getFolderIndex(folderID) {
+            let index = 0;
+            for(const item of this.treeStructure) {
+                if(item.folder.id == folderID)
+                    return index;
+                index++;
+            }
         },
     },
     mounted() {
@@ -135,7 +147,7 @@ h3 {
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
-    background-color: #1d1e26;
     padding: 0 2rem;
+    background-color: #4d517142;
 }
 </style>

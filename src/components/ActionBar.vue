@@ -1,11 +1,24 @@
 <template>
   <div class="actionBar">
-    <div class="uploadBtn">
-        <input type="file" id="uploadBtn" hidden/>
-        <label for="uploadBtn" class="actionBtn labelUploadBtn">IMPORT FILE</label>
+    <div class="actionBtnDiv">
+        <label class="actionBtn"
+        @click="this.$parent.backToPrecFolder();"
+        >BACK</label>
     </div>
-    <div class="uploadBtn">
-        <label class="actionBtn labelUploadBtn">NEW FOLDER</label>
+
+    <div class="actionBtnDiv">
+        <label class="actionBtn"
+        @click="this.$parent.refresh(-1);"
+        >REFRESH</label>
+    </div>
+
+    <div class="actionBtnDiv">
+        <input type="file" id="uploadBtn" hidden/>
+        <label for="uploadBtn" class="actionBtn">IMPORT FILE</label>
+    </div>
+
+    <div class="actionBtnDiv">
+        <label class="actionBtn">NEW FOLDER</label>
     </div>
   </div>
 </template>
@@ -25,10 +38,6 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    border-bottom: 10px solid;
-    border-image-slice: 1;
-    border-width: 5px;
-    border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
 }
 .actionBtn {
     width: fit-content;

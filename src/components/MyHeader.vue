@@ -34,10 +34,10 @@ export default {
     background-color: #1d1e26;
     display: flex;
     justify-content: space-between;
-    /*border-bottom: 10px solid;
+    border-bottom: 10px solid;
     border-image-slice: 1;
     border-width: 5px;
-    border-image-source: linear-gradient(to left, #743ad5, #d53a9d);*/
+    border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
 }
 .logo
 {

@@ -2,11 +2,12 @@
   <div class="myUsers">
     <action-bar></action-bar>
     <div class="strctureTree">
-        <div class="treeItem" @click="this.backToRootFolder()"> / </div>
-        <div class="treeItem" 
+        <structure-tree-item 
         v-for="item in treeStructure" :key="item"
-        
-        ><p> {{item.folder.name}} </p></div>
+        :folderID="item.folder.id"
+        :folderName="item.folder.name"
+        @click="backToFolder(item.folder.id)"
+        ></structure-tree-item>
     </div>
     <div class="filesTree">
         <my-folder 
@@ -33,9 +34,10 @@ import Axios from '@/services/interceptors.js';
 import MyFile from "@/components/MyFile.vue";
 import MyFolder from "@/components/MyFolder.vue"
 import ActionBar from "@/components/ActionBar.vue"
+import StructureTreeItem from "./StructureTreeItem.vue";
 
 export default {
-    components: { MyFile, ActionBar, MyFolder },
+    components: { MyFile, ActionBar, MyFolder, StructureTreeItem },
     name: 'MyuserDirectory',
     data() {
         return {
@@ -88,15 +90,24 @@ export default {
              this.treeStructure.push({folder : {id : folderID, name : folderName}})
             }        	
         },
-        backToRootFolder() {
-            this.treeStructure = [];
-            this.refresh(this.rootFolderID);
-        }
+        backToFolder(folderID) {
+            let find = false;
+            let index = 0;
+            for(const item of this.treeStructure) {
+                if(find)
+                    this.treeStructure.splice(index, 1);
+                if(item.folder.id == folderID)
+                    find = true;
+                index++;
+            }
+            this.refresh(folderID)
+        },
     },
     mounted() {
         Axios.get(API.URL + API.USERS_ROOTFOLDER)
         .then(response => {
-            this.rootFolderID = response.data
+            this.rootFolderID = response.data;
+            this.treeStructure.push({folder : {id : this.rootFolderID, name : '/'}})
             this.refresh(response.data);
         })
         .catch( error => {
@@ -126,18 +137,5 @@ h3 {
     align-items: center;
     background-color: #1d1e26;
     padding: 0 2rem;
-}
-.treeItem {
-    background: rgba(116, 58, 213, 0.5);
-    border-radius: 0.3rem;
-    color: white;
-    width: fit-content;
-    padding: 1rem;
-    height: 70%;
-    display: flex;
-    align-items: center;
-    font-family: 'Lato', Verdana, Geneva, Tahoma, sans-serif;
-    margin-right: 1rem;
-    cursor: pointer;
 }
 </style>

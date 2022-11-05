@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '@/views/HomePage.vue';
 import LoginPage from '@/views/LoginPage.vue';
+import RegisterPage from '@/views/RegisterPage.vue'
 
 const routes = [
 {
@@ -13,6 +14,12 @@ const routes = [
     name: 'LoginPage',
     path: '',
     component: LoginPage,
+    props: true,
+    meta : { requiresAuth: false }
+},{
+    name: 'RegisterPage',
+    path : '/register',
+    component: RegisterPage,
     props: true,
     meta : { requiresAuth: false }
 }
@@ -33,7 +40,7 @@ router.beforeEach((to, from, next) => {
         else
             next('');
     }
-    else if(isLogged == 'true' && to.name == 'LoginPage' )
+    else if(isLogged == 'true' && to.name == 'LoginPage' || isLogged == 'true' && to.name == 'RegisterPage')
         next('/home');
     else
         next();

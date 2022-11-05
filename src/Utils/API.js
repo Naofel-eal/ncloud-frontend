@@ -2,7 +2,9 @@ class API{
     static URL = "http://localhost:3000/";
 
     //AUTHENTICATION
-    static LOGIN ="auth/login";
+    static LOGIN = "auth/login";
+    static REGISTER_EMAIL = "users/registermail"
+    static REGISTER_USERNAME = "users/registerusername"
 
     //FILES
     static FILES = 'files/';

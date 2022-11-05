@@ -81,7 +81,7 @@ label
 {
     opacity: 0.98;
     width: 40%;
-    height: 70%;
+    height: fit-content;
     margin: 0;
     display: flex;
     flex-direction: column;

@@ -50,15 +50,15 @@ export default {
                 }
                 formData.append('currentFolderID', currentFolderID)
             
-            await Axios.post(API.URL + API.FILE_PUSH,formData, {
+                await Axios.post(API.URL + API.FILE_PUSH,formData, {
                     headers : {
                         'Content-Type': 'multipart/form-data'
                     },
-                }).then(function () {
-                    this.refreshParent();
-                }).catch(error => {
+                })
+                .catch(error => {
                     console.log("ERROR : " + error);
                 });
+                this.refreshParent();
             }
         }
     }

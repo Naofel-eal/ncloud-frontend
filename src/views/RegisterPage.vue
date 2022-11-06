@@ -17,11 +17,12 @@ export default {
 <style>
 .registerPageDiv
 {
-  width: 100%;
+  max-width: 100vw;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 </style>

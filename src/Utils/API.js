@@ -5,6 +5,7 @@ class API{
     static LOGIN = "auth/login";
     static REGISTER_EMAIL = "users/registermail"
     static REGISTER_USERNAME = "users/registerusername"
+    static REGISTER = "users/register"
 
     //FILES
     static FILES = 'files/';

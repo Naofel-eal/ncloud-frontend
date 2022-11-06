@@ -82,6 +82,19 @@ export default {
 
 /* OBJECTS */
 
+#background-wrap {
+    bottom: 0;
+	left: 0;
+	right: 0;
+	top: 0;
+	padding-top: 50px;
+	height: 100%;
+	position: fixed;
+	z-index: -1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 .cloud {
 	background: #3fa4d7;
 	background: -moz-linear-gradient(top,  #3fa4d7 0%, #455EB5 100%);

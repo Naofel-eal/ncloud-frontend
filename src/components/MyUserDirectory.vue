@@ -16,6 +16,7 @@
         :selected="selectedItemID === 'fo_' + folder.id"
         @click="selectedItemID = folder.id === selectedItemID ? 0 : 'fo_' + folder.id; doubleClickFolder(folder.id, folder.name)"
         ></my-folder>
+        
         <my-file
          v-for="file in files" :key="file" 
          :name="file.name" 
@@ -23,7 +24,6 @@
          :selected="selectedItemID === 'fi_' + file.id"
          @click="selectedItemID = file.id === selectedItemID ? 0 : 'fi_' + file.id"
          ></my-file>
-         
     </div>
   </div>
 </template>
@@ -55,8 +55,6 @@ export default {
     },
     methods : {
         refresh(parentFolderID) {
-            console.log("refresh " + parentFolderID)
-            console.log(this.treeStructure)
             if(parentFolderID === -1)
                 parentFolderID = this.treeStructure[this.treeStructure.length-1].folder.id;
             this.getFolders(parentFolderID);
@@ -68,7 +66,7 @@ export default {
                 this.files = response.data;
             })
             .catch( error => {
-                console.log("Error files recovery : " + error.response.status);
+                console.log("Error files recovery : " + error);
             });
         },
         getFolders(parentFolderID) {
@@ -77,7 +75,7 @@ export default {
                 this.folders = response.data;
             })
             .catch( error => {
-                console.log("Error folders recovery : " + error.response.status);
+                console.log("Error folders recovery : " + error);
             });
         },
         doubleClickFolder: function(folderID, folderName){

@@ -1,7 +1,7 @@
 <template>
     <div class="myFolder" :class="{selected : selected}" >
         <div class="folderLogo"></div>
-        <p class="folderName">{{name}} - {{id}}</p>
+        <p class="folderName">{{name}}</p>
     </div>
 </template>
 

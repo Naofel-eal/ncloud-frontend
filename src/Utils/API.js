@@ -13,7 +13,7 @@ class API{
 
     //FOLDERS
     static FOLDERS = 'folders/';
-    static FOLDERS_PUSH = 'folders/push';
+    static FOLDER_CREATE = 'folders/create';
     static FOLDER_FILES = 'folders/files';
     static FOLDERS_FOLDERS = 'folders/folders';
 

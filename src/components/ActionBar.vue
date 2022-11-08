@@ -21,25 +21,29 @@
     </div>
 
     <div class="actionBtnDiv">
-        <label class="actionBtn">NEW FOLDER</label>
+        <label class="actionBtn" @click="this.openOverlay()/*this.createFolder();*/">NEW FOLDER</label>
     </div>
+
+    <folder-name-overlay :revele="revele" :openOverlay="openOverlay" :exitOverlay="exitOverlay"></folder-name-overlay>
   </div>
 </template>
 
 <script>
 import API from "@/Utils/API.js"
 import Axios from '@/services/interceptors.js';
+import FolderNameOverlay from './FolderNameOverlay.vue';
 
 export default {
     name : 'ActionBar',
+    components: { FolderNameOverlay },
     data() {
         return {
-            
+            revele :false,
         }
     },
     methods : {
-        refreshParent() {
-            this.$parent.refresh(-1);
+        async refreshParent() {
+            await this.$parent.refresh(-1);
         },
         async submitFiles() {
             if(this.$refs.file.files.length != 0) {
@@ -60,12 +64,35 @@ export default {
                 });
                 this.refreshParent();
             }
+        },
+        async createFolder(folderName){
+            if(folderName != null)
+            {
+                const parentFolderID = await this.$parent.getCurrentFolderID();
+                console.log("PARENT ID : " + parentFolderID + " " + folderName)
+                await Axios.post(API.URL + API.FOLDER_CREATE, {parentFolderID: parentFolderID, folderName: folderName})
+                await this.refreshParent();
+            }
+            else
+                this.exitOverlay(0)
+            
+        },
+        openOverlay() {
+            this.revele = true;
+        },
+        async exitOverlay(name) {
+            if(name == 0)
+            {
+                this.revele = false;
+                return;
+            }
+            await this.createFolder(name);
         }
     }
 }
 </script>
 
-<style>
+<style scoped>
 .actionBar {
     width: 100vw;
     height: 8vh;

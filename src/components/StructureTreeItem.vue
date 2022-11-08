@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .structureTreeItem {
     opacity: 0.8;
     background: rgba(116, 58, 213, 0.5);
@@ -36,6 +36,7 @@ export default {
     height: 70%;
     display: flex;
     align-items: center;
+    justify-content: center;
     font-family: 'Lato', Verdana, Geneva, Tahoma, sans-serif;
     margin-right: 1rem;
     cursor: pointer;
@@ -50,5 +51,9 @@ export default {
 }
 .structureTreeItem:hover {
     opacity: 1;
+}
+p {
+    margin: 0;
+    padding: 0;
 }
 </style>

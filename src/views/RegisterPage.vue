@@ -14,7 +14,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .registerPageDiv
 {
   max-width: 100vw;

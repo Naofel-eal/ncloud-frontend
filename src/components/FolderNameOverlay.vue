@@ -5,8 +5,10 @@
         <div class="btn-modale btn btn-danger" @click="exitOverlay(0)">X</div>
         <h2>Folder name:</h2>
         <form>
-            <input v-model="folderName" type="text" placeholder="Enter the folder's name">
-            <button class="valid" role="button" @click="exitOverlay(this.folderName)">Valid</button>
+            <input v-model="folderName" type="text" placeholder="Enter the folder's name" autofocus>
+            <button class="valid" role="button" 
+            @click="this.value=this.folderName;this.folderName='';exitOverlay(this.value)">
+            Valid</button>
         </form>
     </div>
   </div>
@@ -17,7 +19,12 @@ import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 export default {
     name:'FolderNameOverlay',
-    props: ['revele', 'openOverlay', 'exitOverlay']
+    props: ['revele', 'openOverlay', 'exitOverlay'],
+    data () {
+        return {
+            value : "",
+        }
+    }
 }
 </script>
  

@@ -3,17 +3,18 @@ import Axios from "axios";
 import router from "@/router/index.js";
 
 Axios.defaults.baseURL = API.URL;
+Axios.defaults.withCredentials = false;
 
 Axios.interceptors.request.use(function (request){
-    console.log(sessionStorage.getItem('isLogged'))
     if(sessionStorage.getItem('isLogged') == 'true')
-        request.headers.Authorization = 'Bearer ' + sessionStorage.getItem('token');
+        request.headers.Authorization = 'Bearer ' + sessionStorage.getItem('token')
     return request;
 });
 
 Axios.interceptors.response.use(response => {
     return response;
 },function(error) {
+    console.log(error)
     if(error.response.status == 401 && router.currentRoute.value.fullPath !='/')
     {
         sessionStorage.removeItem('token');

@@ -21,7 +21,7 @@
     </div>
 
     <div class="actionBtnDiv">
-        <label class="actionBtn" @click="this.openOverlay()/*this.createFolder();*/">NEW FOLDER</label>
+        <label class="actionBtn" @click="this.openOverlay()">NEW FOLDER</label>
     </div>
 
     <folder-name-overlay :revele="revele" :openOverlay="openOverlay" :exitOverlay="exitOverlay"></folder-name-overlay>
@@ -69,8 +69,7 @@ export default {
             if(folderName != null)
             {
                 const parentFolderID = await this.$parent.getCurrentFolderID();
-                console.log("PARENT ID : " + parentFolderID + " " + folderName)
-                await Axios.post(API.URL + API.FOLDER_CREATE, {parentFolderID: parentFolderID, folderName: folderName})
+                await Axios.post(API.URL + API.FOLDER_CREATE, {parentFolderID: parentFolderID, folderName: folderName}, )
                 await this.refreshParent();
             }
             else
@@ -81,11 +80,9 @@ export default {
             this.revele = true;
         },
         async exitOverlay(name) {
+            this.revele = false;
             if(name == 0)
-            {
-                this.revele = false;
                 return;
-            }
             await this.createFolder(name);
         }
     }

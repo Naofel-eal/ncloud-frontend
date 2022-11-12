@@ -89,6 +89,7 @@ form input {
     height: 30px;
     border: 0;
     transition: all 0.2s ease-in-out;
+    outline: none;
 }
 form {
     margin-top: 1rem;

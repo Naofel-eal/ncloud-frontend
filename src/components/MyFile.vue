@@ -35,6 +35,7 @@ export default {
     height: fit-content;
     margin-left: 2rem;
     margin-bottom: 2rem;
+    cursor: pointer;
 }
 .selected {
     background-color: rgba(255,255,255,0.3);

@@ -9,20 +9,20 @@
         @click="backToFolder(item.folder.id)"
         ></structure-tree-item>
     </div>
-    <div class="filesTree">
+    <div class="filesTree" @click="this.emptyClick()">
         <my-folder 
         v-for="folder in folders" :key="folder" 
         :name="folder.name" :id="folder.id"
-        :selected="selectedItemID === 'fo_' + folder.id"
-        @click="selectedItemID = folder.id === selectedItemID ? 0 : 'fo_' + folder.id; doubleClickFolder(folder.id, folder.name)"
+        :selected="isSelectedFolder(folder.id)"
+        @click="selectFolders($event, folder.id); doubleClickFolder(folder.id, folder.name)"
         ></my-folder>
         
         <my-file
          v-for="file in files" :key="file" 
          :name="file.name" 
          :type="file.type"
-         :selected="selectedItemID === 'fi_' + file.id"
-         @click="selectedItemID = file.id === selectedItemID ? 0 : 'fi_' + file.id"
+         :selected="isSelectedFile(file.id)"
+         @click="selectFiles($event, file.id)"
          ></my-file>
     </div>
   </div>
@@ -43,7 +43,6 @@ export default {
         return {
             files : [],
             folders : [],
-            selectedItemID: 0,
             clickData : {
                 delay : 500,
                 clicks : 0,
@@ -52,6 +51,10 @@ export default {
             },
             treeStructure : [],
             rootFolderID : 0,
+            selectedItems : {
+                folders : [],
+                files : [],
+            },
         }
     },
     methods : {
@@ -78,6 +81,41 @@ export default {
             .catch( error => {
                 console.log("Error folders recovery : " + error);
             });
+        },
+        selectFiles(e, fileID) {
+            if(this.isSelectedFile(fileID) === false) {
+                if(!e.ctrlKey) {
+                    this.selectedItems.files = [];
+                    this.selectedItems.folders = [];
+                }
+                this.selectedItems.files.push(fileID)
+            }
+        },
+        selectFolders(e, folderID) {
+            if(this.isSelectedFolder(folderID) === false) {
+                if(!e.ctrlKey) {
+                    this.selectedItems.folders = [];
+                    this.selectedItems.files = [];
+                }
+                this.selectedItems.folders.push(folderID)
+            }
+        },
+        isSelectedFolder(folderID) {
+            for(const item of this.selectedItems.folders) {
+                if(item == folderID)
+                    return true
+            }
+            return false
+        },
+        isSelectedFile(fileID) {
+            for(const item of this.selectedItems.files) {
+                if(item == fileID)
+                    return true
+            }
+            return false
+        },
+        emptyClick() {      
+            //console.log(this.selectedItems)
         },
         doubleClickFolder: function(folderID, folderName){
           this.clickData.clicks++ 
@@ -132,7 +170,7 @@ export default {
         .catch( error => {
             console.log("Impossible de trouver le dossier root : " + error.response.status);
         });
-    }
+    },
 }   
 </script>
 

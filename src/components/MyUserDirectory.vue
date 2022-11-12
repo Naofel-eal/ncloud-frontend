@@ -47,6 +47,7 @@ export default {
             clickData : {
                 delay : 500,
                 clicks : 0,
+                folderID : -1,
                 timer : null,
             },
             treeStructure : [],
@@ -82,14 +83,17 @@ export default {
           this.clickData.clicks++ 
           if(this.clickData.clicks === 1) {
             var self = this.clickData
+            self.folderID = folderID
             this.clickData.timer = setTimeout(function() {
               self.clicks = 0
             }, this.clickData.delay);
-          } else{
-             clearTimeout(this.clickData.timer);  
-             this.clickData.clicks = 0;
-             this.treeStructure.push({folder : {id : folderID, name : folderName}})
-             this.refresh(folderID);
+          }else{
+            if(this.clickData.folderID == folderID) {
+                clearTimeout(this.clickData.timer);  
+                this.clickData.clicks = 0;
+                this.treeStructure.push({folder : {id : folderID, name : folderName}})
+                this.refresh(folderID);
+                }
             }
         },
         async backToFolder(folderID) {
@@ -143,6 +147,7 @@ h3 {
 }
 .filesTree {
     display: flex;
+    flex-wrap: wrap;
 }
 .strctureTree {
     width: 100vw;

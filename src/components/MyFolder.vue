@@ -37,6 +37,7 @@ export default {
     margin-left: 2rem;
     margin-bottom: 2rem;
     cursor: pointer;
+    flex-shrink: 0;
 }
 .selected {
     background-color: rgba(255,255,255,0.3);

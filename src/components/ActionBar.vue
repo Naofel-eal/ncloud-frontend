@@ -13,15 +13,16 @@
     </div>
 
     <div class="actionBtnDiv">
-        <input id="uploadBtn" type="file" name="file" ref="file" multiple="multiple" hidden/>
+        <input id="uploadBtn" type="file" name="file" ref="file" multiple="multiple" @change="this.submitFiles();" hidden/>
         <label for="uploadBtn" class="actionBtn">IMPORT FILE</label>
-    </div>
-    <div class="actionBtnDiv">
-        <label class="actionBtn" @click="this.submitFiles();">UPLOAD</label>
     </div>
 
     <div class="actionBtnDiv">
         <label class="actionBtn" @click="reveleOverlay = true">NEW FOLDER</label>
+    </div>
+
+    <div class="actionBtnDiv">
+        <label class="actionBtn" @click="this.delete()">DELETE</label>
     </div>
 
     <folder-name-overlay 
@@ -49,6 +50,9 @@ export default {
         async refreshParent() {
             await this.$parent.refresh(-1);
         },
+        selectionnedFiles() {
+            alert(this.$refs.file.files.length)
+        },
         async submitFiles() {
             if(this.$refs.file.files.length != 0) {
                 const currentFolderID = this.$parent.getCurrentFolderID();
@@ -75,6 +79,9 @@ export default {
             await this.refreshParent();
             this.reveleOverlay = false; 
         },
+        async delete() {
+            alert("delete");
+        }
     }
 }
 </script>

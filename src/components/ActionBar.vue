@@ -21,10 +21,14 @@
     </div>
 
     <div class="actionBtnDiv">
-        <label class="actionBtn" @click="this.openOverlay()">NEW FOLDER</label>
+        <label class="actionBtn" @click="reveleOverlay = true">NEW FOLDER</label>
     </div>
 
-    <folder-name-overlay :revele="revele" :openOverlay="openOverlay" :exitOverlay="exitOverlay"></folder-name-overlay>
+    <folder-name-overlay 
+    @submit-folder-name="createFolder($event)"
+    @close="this.reveleOverlay = false"
+    v-if="reveleOverlay"
+    ></folder-name-overlay>
   </div>
 </template>
 
@@ -38,7 +42,7 @@ export default {
     components: { FolderNameOverlay },
     data() {
         return {
-            revele :false,
+            reveleOverlay :false,
         }
     },
     methods : {
@@ -66,25 +70,11 @@ export default {
             }
         },
         async createFolder(folderName){
-            if(folderName != null)
-            {
-                const parentFolderID = await this.$parent.getCurrentFolderID();
-                await Axios.post(API.URL + API.FOLDER_CREATE, {parentFolderID: parentFolderID, folderName: folderName}, )
-                await this.refreshParent();
-            }
-            else
-                this.exitOverlay(0)
-            
+            const parentFolderID = await this.$parent.getCurrentFolderID();
+            await Axios.post(API.URL + API.FOLDER_CREATE, {parentFolderID: parentFolderID, folderName: folderName}, )
+            await this.refreshParent();
+            this.reveleOverlay = false; 
         },
-        openOverlay() {
-            this.revele = true;
-        },
-        async exitOverlay(name) {
-            this.revele = false;
-            if(name == 0)
-                return;
-            await this.createFolder(name);
-        }
     }
 }
 </script>

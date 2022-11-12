@@ -1,14 +1,17 @@
 <template>
-  <div class="bloc-modale" v-if="revele">
-    <div class="overlay" @click="exitOverlay(0)"></div>
+  <div class="bloc-modale">
+    <div class="overlay" @click="close()"></div>
     <div class="modale card">
-        <div class="btn-modale btn btn-danger" @click="exitOverlay(0)">X</div>
+        <div class="btn-modale btn btn-danger" @click="close()">X</div>
         <h2>Folder name:</h2>
-        <form>
-            <input v-model="folderName" type="text" placeholder="Enter the folder's name" autofocus>
-            <button class="valid" role="button" 
-            @click="this.value=this.folderName;this.folderName='';exitOverlay(this.value)">
-            Valid</button>
+        <form @submit="submit($event)">
+            <input 
+            v-model="folderName" 
+            id="folderNameInput" 
+            type="text" placeholder="Enter the folder's name" 
+            autofocus
+            ref="inputFolderNameRef">
+            <button class="valid">Valid</button>
         </form>
     </div>
   </div>
@@ -19,11 +22,22 @@ import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 export default {
     name:'FolderNameOverlay',
-    props: ['revele', 'openOverlay', 'exitOverlay'],
     data () {
         return {
-            value : "",
+            folderName: "",
         }
+    },
+    methods : {
+        submit(e) {
+            e.preventDefault();
+            this.$emit('submitFolderName', this.folderName);
+        },
+        close() {
+            this.$emit('close');
+        }
+    },
+    mounted() {
+        this.$refs.inputFolderNameRef.focus();
     }
 }
 </script>

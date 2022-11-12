@@ -49,6 +49,9 @@ export default {
         return {
             username: "",
             password: "",
+            firstname: "",
+            mail: "",
+            name: "",
             showError: { print : false, msg: ""},
         };
     },

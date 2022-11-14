@@ -80,7 +80,12 @@ export default {
             this.reveleOverlay = false; 
         },
         async delete() {
-            alert("delete");
+            const filesID = await (this.$parent.getSelectedItems()).files;
+            await Axios.post(API.URL + API.FILE_DELETE, {filesID})
+            .catch( error => {
+                console.log("Error files delete : " + error);
+            });
+            this.refreshParent();
         }
     }
 }

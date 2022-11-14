@@ -10,6 +10,7 @@ class API{
     //FILES
     static FILES = 'files/';
     static  FILE_PUSH = 'files/upload';
+    static FILE_DELETE = 'files/delete';
 
     //FOLDERS
     static FOLDERS = 'folders/';

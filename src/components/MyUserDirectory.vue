@@ -82,6 +82,9 @@ export default {
                 console.log("Error folders recovery : " + error);
             });
         },
+        getSelectedItems() {
+            return this.selectedItems;
+        },
         selectFiles(e, fileID) {
             if(this.isSelectedFile(fileID) === false) {
                 if(!e.ctrlKey) {

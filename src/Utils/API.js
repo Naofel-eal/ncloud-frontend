@@ -17,6 +17,7 @@ class API{
     static FOLDER_CREATE = 'folders/create';
     static FOLDER_FILES = 'folders/files';
     static FOLDERS_FOLDERS = 'folders/folders';
+    static FOLDER_DELETE = 'folders/delete'
 
     //GROUPS
     static GROUPS = 'groups';

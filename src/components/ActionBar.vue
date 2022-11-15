@@ -50,9 +50,6 @@ export default {
         async refreshParent() {
             await this.$parent.refresh(-1);
         },
-        selectionnedFiles() {
-            alert(this.$refs.file.files.length)
-        },
         async submitFiles() {
             if(this.$refs.file.files.length != 0) {
                 const currentFolderID = this.$parent.getCurrentFolderID();
@@ -82,6 +79,12 @@ export default {
         async delete() {
             const filesID = await (this.$parent.getSelectedItems()).files;
             await Axios.post(API.URL + API.FILE_DELETE, {filesID})
+            .catch( error => {
+                console.log("Error files delete : " + error);
+            });
+
+            const foldersID = await (this.$parent.getSelectedItems()).folders;
+            await Axios.post(API.URL + API.FOLDER_DELETE, {foldersID})
             .catch( error => {
                 console.log("Error files delete : " + error);
             });

@@ -7,6 +7,9 @@
         :folderID="item.folder.id"
         :folderName="item.folder.name"
         @click="backToFolder(item.folder.id)"
+        @drop="onDrop($event, item.folder.id)"
+        @dragenter.prevent
+        @dragover.prevent
         ></structure-tree-item>
     </div>
     <div class="filesTree" @click="this.emptyClick()">
@@ -14,7 +17,12 @@
         v-for="folder in folders" :key="folder" 
         :name="folder.name" :id="folder.id"
         :selected="isSelectedFolder(folder.id)"
+        draggable="true"
+        @dragstart="this.startDrag($event, folder, 'folder')"
         @click="selectFolders($event, folder.id); doubleClickFolder(folder.id, folder.name)"
+        @drop="onDrop($event, folder.id)"
+        @dragenter.prevent
+        @dragover.prevent
         ></my-folder>
         
         <my-file
@@ -22,6 +30,8 @@
          :name="file.name" 
          :type="file.type"
          :selected="isSelectedFile(file.id)"
+         draggable="true"
+         @dragstart="this.startDrag($event, file, 'file')"
          @click="selectFiles($event, file.id)"
          ></my-file>
     </div>
@@ -93,6 +103,16 @@ export default {
                 }
                 this.selectedItems.files.push(fileID)
             }
+            else {
+                if(!e.ctrlKey) {
+                    this.selectedItems.folders = [];
+                    this.selectedItems.files = [];
+                }
+                else {
+                    const index = this.selectedItems.files.indexOf(fileID)
+                    this.selectedItems.files.splice(index, 1);
+                }
+            }
         },
         selectFolders(e, folderID) {
             if(this.isSelectedFolder(folderID) === false) {
@@ -101,6 +121,16 @@ export default {
                     this.selectedItems.files = [];
                 }
                 this.selectedItems.folders.push(folderID)
+            }
+            else {
+                if(!e.ctrlKey) {
+                    this.selectedItems.folders = [];
+                    this.selectedItems.files = [];
+                }
+                else {
+                    const index = this.selectedItems.folders.indexOf(folderID)
+                    this.selectedItems.folders.splice(index, 1);
+                }
             }
         },
         isSelectedFolder(folderID) {
@@ -118,7 +148,7 @@ export default {
             return false
         },
         emptyClick() {      
-            //console.log(this.selectedItems)
+            //console.log('click')
         },
         doubleClickFolder: function(folderID, folderName){
           this.clickData.clicks++ 
@@ -161,6 +191,28 @@ export default {
         },
         getCurrentFolderID() {
             return this.treeStructure[this.treeStructure.length-1].folder.id;
+        },
+        startDrag(event, item, type) {
+            if(type == "folder" && !this.isSelectedFolder(item.id))
+                this.selectedItems.folders.push(item.id)
+            else if(type == "file" && !this.isSelectedFile(item.id))
+                this.selectedItems.files.push(item.id)
+            event.dataTransfer.dropEffect = 'move'
+            event.dataTransfer.effectAllowed = 'move'
+        },
+        async onDrop(event, targetFolderID) {
+            const selectedFoldersID = this.selectedItems.folders;
+            const selectedFilesID = this.selectedItems.files;
+            
+            await Axios.post(API.URL + API.FOLDERS_AND_FILES_MOVE, {selectedFoldersID, selectedFilesID, targetFolderID})
+            .catch( error => {
+                console.log("Error moving files : " + error);
+            });
+            console.log("MOVE OK")
+            this.selectedItems.files = []
+            this.selectedItems.folders = []
+
+            this.refresh(-1)
         }
     },
     mounted() {

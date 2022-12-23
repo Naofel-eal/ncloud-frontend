@@ -5,7 +5,7 @@
       <img class="logo" src='@/assets/img/logo.png'>
       <h2>Home</h2>
     </div>
-    <div @click="logOut" ><img class="logOut" src="@/assets/img/logOut.png"></div>
+    <div class="logoutDiv" @click="logOut" ><img class="logOut" src="@/assets/img/logout.svg"></div>
   </div>
 </template>
 
@@ -22,7 +22,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .header
 {
     top:0;
@@ -61,12 +61,17 @@ h2
 
 .logOut, .invisible
 {
-  height: 90%;
-  width: 79px;
+  height: 50%;
   margin: none;
+  filter: invert(100%);
 }
 .logOut
 {
   cursor: pointer;
+}
+.logoutDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

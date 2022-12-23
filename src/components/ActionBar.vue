@@ -3,26 +3,26 @@
     <div class="actionBtnDiv">
         <label class="actionBtn"
         @click="this.$parent.backToPrecFolder();"
-        >BACK</label>
+        ><img class="icon" src="../assets/img/back.svg"></label>
     </div>
 
     <div class="actionBtnDiv">
         <label class="actionBtn"
         @click="this.refreshParent()"
-        >REFRESH</label>
+        ><img class="icon" src="../assets/img/refresh.svg"></label>
     </div>
 
     <div class="actionBtnDiv">
         <input id="uploadBtn" type="file" name="file" ref="file" multiple="multiple" @change="this.submitFiles();" hidden/>
-        <label for="uploadBtn" class="actionBtn">IMPORT FILE</label>
+        <label for="uploadBtn" class="actionBtn"><img class="icon" src="../assets/img/upload.svg"></label>
     </div>
 
     <div class="actionBtnDiv">
-        <label class="actionBtn" @click="reveleOverlay = true">NEW FOLDER</label>
+        <label class="actionBtn" @click="reveleOverlay = true">NEW</label>
     </div>
 
     <div class="actionBtnDiv">
-        <label class="actionBtn" @click="this.delete()">DELETE</label>
+        <label class="actionBtn" @click="this.delete()"><img class="icon" src="../assets/img/delete.svg"></label>
     </div>
 
     <folder-name-overlay 
@@ -105,9 +105,10 @@ export default {
     align-items: center;
 }
 .actionBtn {
+    margin: 0;
     width: fit-content;
     background-color: #743ad5;
-    color: white;
+    color: black;
     padding: 0.5rem;
     font-family: 'Lato', Verdana, Geneva, Tahoma, sans-serif;
     font-size: large;
@@ -125,6 +126,10 @@ export default {
 }
 .actionBtn:hover {
     opacity: 1;
+}
+.icon {
+    height: 30px;
+    /*filter: invert(100%);*/
 }
 
 </style>

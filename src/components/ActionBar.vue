@@ -3,26 +3,28 @@
     <div class="actionBtnDiv">
         <label class="actionBtn"
         @click="this.$parent.backToPrecFolder();"
+        title="Back to precedent folder"
         ><img class="icon" src="../assets/img/back.svg"></label>
     </div>
 
     <div class="actionBtnDiv">
         <label class="actionBtn"
         @click="this.refreshParent()"
+        title="Refresh"
         ><img class="icon" src="../assets/img/refresh.svg"></label>
     </div>
 
     <div class="actionBtnDiv">
-        <input id="uploadBtn" type="file" name="file" ref="file" multiple="multiple" @change="this.submitFiles();" hidden/>
-        <label for="uploadBtn" class="actionBtn"><img class="icon" src="../assets/img/upload.svg"></label>
+        <input id="uploadBtn" type="file" name="file" ref="file" multiple="multiple" @change="this.submitFiles();" hidden title="Upload files"/>
+        <label for="uploadBtn" class="actionBtn"><img class="icon" src="../assets/img/upload.svg" title="Upload Files"></label>
     </div>
 
     <div class="actionBtnDiv">
-        <label class="actionBtn" @click="reveleOverlay = true">NEW</label>
+        <label class="actionBtn" @click="reveleOverlay = true" title="New Folder">NEW</label>
     </div>
 
     <div class="actionBtnDiv">
-        <label class="actionBtn" @click="this.delete()"><img class="icon" src="../assets/img/delete.svg"></label>
+        <label class="actionBtn" @click="this.delete()"  title="Delete"><img class="icon" src="../assets/img/delete.svg"></label>
     </div>
 
     <folder-name-overlay 
@@ -96,19 +98,24 @@ export default {
 
 <style scoped>
 .actionBar {
+    position: fixed;
+    top: 0;
     width: 100vw;
     height: 8vh;
     padding: 2rem;
-    background:  #1d1e26;
+    background: /* #1d1e26*/ none;
     display: flex;
-    justify-content: space-around;
+    justify-content: left;
     align-items: center;
 }
 .actionBtn {
     margin: 0;
+    margin-left: 10px;
+    height: 40px;
     width: fit-content;
-    background-color: #743ad5;
-    color: black;
+    background-color: #0000003d;
+    color: white;
+    font-weight: bold;
     padding: 0.5rem;
     font-family: 'Lato', Verdana, Geneva, Tahoma, sans-serif;
     font-size: large;
@@ -123,13 +130,28 @@ export default {
     -ms-user-select: none; /* Internet Explorer/Edge */
         user-select: none; /* Non-prefixed version, currently
                                 supported by Chrome, Edge, Opera and Firefox */    
+    
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
 }
 .actionBtn:hover {
     opacity: 1;
 }
 .icon {
     height: 30px;
-    /*filter: invert(100%);*/
+    filter: invert(100%);
 }
-
+@media (max-width: 916px) {
+    .actionBar {
+        position: relative;
+        width: 100vw;
+        height: 8vh;
+        padding: 2rem;
+        background: /* #1d1e26*/ none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
 </style>
